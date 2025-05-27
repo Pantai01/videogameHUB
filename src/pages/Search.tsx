@@ -24,7 +24,7 @@ export default function Search() {
   return (
     <div className="p-4 text-white">
       <h1 className="text-2xl mb-4">Results for: <span className="italic">{query}</span></h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4">
         {games.map((game) => (
           <Card
             id={game.id}
