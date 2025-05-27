@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { fetchTopGames } from "../services/gamesService";
 import type { Game } from "../interfaces/Game";
+import { useNavigate } from "react-router-dom";
 
 export default function MainCarousel() {
   const [games, setGames] = useState<Game[]>([]);
   const [index, setIndex] = useState(0);
   const timeBetweenSlides = 10000; // 10 seconds
+  const navigate = useNavigate();
 
   // Fetch top games from the API using gamesService
   useEffect(() => {
@@ -38,6 +40,10 @@ export default function MainCarousel() {
     setIndex((prev) => (prev + 1) % games.length);
   };
 
+  const handleClick = () => {
+    navigate(`/game/${game.id}`);
+  };
+
   return (
     <div className="flex flex-col items-center">
       <div className="flex w-full h-[500px] border-4 border-black relative bg-transparent">
@@ -45,7 +51,7 @@ export default function MainCarousel() {
         <div className="w-1/2 bg-[#2a0e2d] p-4 flex items-center justify-center">
           <div className="flex flex-row items-center space-x-6">
             {/* Game Image */}
-            <div className="bg-red-600 border border-white p-1">
+            <div className="bg-red-600 border border-white p-1" onClick={handleClick}>
               <img
                 src={game.background_image}
                 alt={game.name}
@@ -55,7 +61,7 @@ export default function MainCarousel() {
 
             {/* Text Info */}
             <div className="text-4xl text-white space-y-3">
-              <h2 className="text-5xl font-bold">{game.name}</h2>
+              <h2 className="text-5xl font-bold" onClick={handleClick}>{game.name}</h2>
               <p className="text-base italic">#{game.description}</p>
               <p className="text-lg">⭐ Rating: {game.rating.toFixed(1)} / 5</p>
               <p className="text-lg">⏱️ Playtime: {game.playtime}h avg</p>

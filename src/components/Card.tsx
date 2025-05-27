@@ -1,8 +1,15 @@
 import type { Game } from "../interfaces/Game";
+import { useNavigate } from "react-router-dom";
 
 export default function Card({id, name, background_image, rating, playtime, description }: Game) {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/game/${id}`);
+  };
+  
   return (
-    <div className="bg-[#1f1f1f] text-white rounded-lg shadow-md overflow-hidden w-60">
+    <div className="bg-[#1f1f1f] text-white rounded-lg shadow-md overflow-hidden w-60" onClick ={handleClick}>
       <img
         src={background_image}
         alt={name} 

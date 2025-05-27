@@ -19,7 +19,7 @@ export async function fetchTopGames() {
 
         const previewUrl = trailerData.results?.[0]?.data['480'] || null;
 
-        if (!previewUrl) return null; // descarta si no hay trailer
+        if (!previewUrl) return null;
 
         return {
           id: game.id,
@@ -60,4 +60,33 @@ export async function fetchTopRatedGames(limit:number) {
   const res = await fetch(url);
   const data = await res.json();
   return data.results;
+}
+
+export async function fetchGameDetails(id: string) {
+  const urlGameDetails = `${BASE_URL}/games/${id}?key=${API_KEY}`;
+  const urlGameTrailers = `${BASE_URL}/games/${id}/movies?key=${API_KEY}`;
+
+  const resGameDetails = await fetch(urlGameDetails);
+  const resTrailers = await fetch(urlGameTrailers);
+
+  const gameDetailsData = await resGameDetails.json();
+  const trailersData = await resTrailers.json();
+
+  const previewUrl = trailersData.results?.[0]?.data['480'] || null;
+
+  if (!resGameDetails.ok || !resTrailers.ok) {
+    throw new Error("Failed to fetch game details");
+  }
+
+  return {
+    id: gameDetailsData.id,
+    name: gameDetailsData.name,
+    background_image: gameDetailsData.background_image,
+    description: gameDetailsData.description_raw,
+    rating: gameDetailsData.rating,
+    playtime: gameDetailsData.playtime,
+    released: gameDetailsData.released,
+    ratings_count: gameDetailsData.ratings_count,
+    trailer: previewUrl
+  };
 }
