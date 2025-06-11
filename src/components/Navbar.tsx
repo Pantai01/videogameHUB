@@ -38,7 +38,7 @@ export default function Navbar() {
         to="/dashboard"
         className="flex-1 text-center py-4 border-r border-white hover:bg-gray-800 transition"
       >
-        Dashboard
+        Game Lists
       </Link>
       <Link
         to="/profile"

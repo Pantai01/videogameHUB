@@ -5,6 +5,7 @@ import Profile from './pages/Profile';
 import Details from './pages/GameDetails';
 import Navbar from './components/Navbar';
 import { Routes, Route } from 'react-router-dom';
+import { UserGameListsProvider } from "./context/UserGameListsContext";
 
 function App() {
   return (
@@ -13,14 +14,16 @@ function App() {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         }}>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/game/:id" element={<Details />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/search" element={<Search />} />
-      </Routes>
+      <UserGameListsProvider>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/game/:id" element={<Details />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/search" element={<Search />} />
+        </Routes>
+      </UserGameListsProvider>
     </div>
   )
 }
